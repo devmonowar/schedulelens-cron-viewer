@@ -59,7 +59,7 @@ No, and that is intentional for safety and org approval. You can only trigger an
 == Screenshots ==
 
 1. All cron events - repeat, next run, source plugin.
-2. Overdue badge in red - catch missed schedule.
+2. Search and filter - find any job by hook name.
 3. Run now, Pause/Resume, Delete safely (core protected).
 4. Health tab - Green/Yellow/Red + fix steps.
 5. Last 100 runs log with duration.
