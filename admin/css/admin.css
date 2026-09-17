@@ -1,0 +1,19 @@
+.schedulelens-wrap .schedulelens-statusbar{background:#fff;border:1px solid #c3c4c7;padding:10px 14px;margin:12px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.schedulelens-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#46b450}
+.schedulelens-dot.red{background:#dc3232}
+.schedulelens-dot.yellow{background:#ffb900}
+.schedulelens-dot.green{background:#46b450}
+.schedulelens-next{color:#646970}
+.schedulelens-filters{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.schedulelens-table-wrap{overflow-x:auto}
+.schedulelens-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;line-height:1.6}
+.schedulelens-pill.green{background:#e7f7e7;color:#0a6b0a}
+.schedulelens-pill.red{background:#fde8e8;color:#a00}
+.schedulelens-pill.gray{background:#f0f0f1;color:#50575e}
+.schedulelens-pill.yellow{background:#fff8e5;color:#8a6d00}
+.schedulelens-badge{background:#f0f0f1;border-radius:8px;padding:1px 6px;font-size:11px;color:#50575e}
+.schedulelens-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+.schedulelens-card{background:#fff;border:1px solid #c3c4c7;padding:14px}
+.schedulelens-card h2{margin-top:0}
+.schedulelens-welcome p{margin:0.5em 0}
+code{font-family:Consolas,Monaco,monospace}

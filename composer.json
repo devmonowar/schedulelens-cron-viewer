@@ -1,0 +1,38 @@
+{
+	"name": "devmonowar/schedulelens-cron-viewer",
+	"description": "Cron manager for WordPress - see jobs, fix missed schedule, wp-cron health check, no upsell.",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"cron",
+		"cron-manager",
+		"scheduler",
+		"wp-cron",
+		"missed-schedule",
+		"health",
+		"wordpress-plugin"
+	],
+	"homepage": "https://wordpress.org/plugins/schedulelens-cron-viewer/",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Monowar Hossain",
+			"email": "devmonowar@gmail.com",
+			"homepage": "https://devmonowar.github.io/",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/devmonowar/schedulelens-cron-viewer/issues",
+		"source": "https://github.com/devmonowar/schedulelens-cron-viewer",
+		"forum": "https://wordpress.org/support/plugin/schedulelens-cron-viewer/"
+	},
+	"require": {
+		"php": ">=7.4",
+		"composer/installers": "^1.0 || ^2.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
+	}
+}
