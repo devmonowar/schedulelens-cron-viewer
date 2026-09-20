@@ -25,7 +25,7 @@ ScheduleLens shows every scheduled job on your WordPress site in plain words. It
 
 No external service. 100% free, no upsell.
 
-Learn more: https://github.com/devmonowar/schedulelens-cron-viewer
+**[Plugin page](https://devmonowar.github.io/schedulelens-cron-viewer/)** — what ScheduleLens does and why it exists · **[Development on GitHub](https://github.com/devmonowar/schedulelens-cron-viewer)** — report issues or contribute.
 
 == Installation ==
 
