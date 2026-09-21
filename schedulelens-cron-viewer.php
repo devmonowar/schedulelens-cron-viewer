@@ -1,11 +1,13 @@
 <?php
 /**
  * Plugin Name: ScheduleLens - Cron Viewer & Manager
+ * Plugin URI: https://devmonowar.github.io/schedulelens-cron-viewer/
  * Description: See all scheduled jobs, catch overdue tasks, run or pause events, and check cron health - lightweight, admin-only, 100% free.
  * Version: 1.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Monowar Hossain
+ * Author URI: https://devmonowar.github.io/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: schedulelens-cron-viewer
