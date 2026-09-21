@@ -1,17 +1,19 @@
 {
 	"name": "devmonowar/schedulelens-cron-viewer",
-	"description": "Cron manager for WordPress - see jobs, fix missed schedule, wp-cron health check, no upsell.",
+	"description": "See all scheduled jobs, catch overdue tasks, run or pause events, and check cron health - lightweight, admin-only, 100% free.",
 	"type": "wordpress-plugin",
 	"keywords": [
 		"cron",
 		"cron-manager",
+		"cron job manager",
 		"scheduler",
 		"wp-cron",
 		"missed-schedule",
+		"scheduled posts",
 		"health",
 		"wordpress-plugin"
 	],
-	"homepage": "https://wordpress.org/plugins/schedulelens-cron-viewer/",
+	"homepage": "https://devmonowar.github.io/schedulelens-cron-viewer/",
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{

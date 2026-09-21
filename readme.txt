@@ -56,6 +56,22 @@ No. Everything stays in wp_options (autoload=no). No remote calls except a loopb
 = Can I add PHP code to a job? =
 No, and that is intentional for safety and org approval. You can only trigger an existing hook.
 
+= Why are my scheduled posts not publishing? =
+Usually low traffic (nothing triggers WP-Cron), a caching layer serving pages without running PHP, or DISABLE_WP_CRON with no server cron replacing it. Open the Health tab — Green / Yellow / Red plus fix steps tell you which one it is.
+
+= How do I disable WP-Cron and use a real server cron? =
+Define DISABLE_WP_CRON as true in wp-config.php, then add a server cron job that calls wp-cron.php every few minutes (your host's control panel usually has a Cron Jobs screen). ScheduleLens keeps working — its Health tab will show the system cron driving schedules.
+
+= What is the difference between WP-Cron and a system cron job? =
+WP-Cron only runs when someone visits your site; on a quiet site, scheduled jobs fire late or never. A system cron runs on the clock regardless of traffic. That is the whole difference, and the reason quiet sites miss schedules.
+
+= Which plugin added this cron job? =
+The Source column on the events list names the plugin (or theme, or WordPress core) that registered each job. An unknown source usually means custom code in functions.php or a must-use plugin.
+
+== External services ==
+
+ScheduleLens makes one kind of outbound request: a loopback GET to your own site's `wp-cron.php` for the Health tab. Nothing leaves your server — the request goes to your own domain and back.
+
 == Screenshots ==
 
 1. All cron events - repeat, next run, source plugin.
