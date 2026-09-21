@@ -1,6 +1,6 @@
 === ScheduleLens - Cron Viewer & Manager ===
 Contributors: kstmonowar
-Tags: cron, scheduler, wp-cron, manager, health
+Tags: cron, wp-cron, cron job manager, missed schedule, scheduled posts
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
