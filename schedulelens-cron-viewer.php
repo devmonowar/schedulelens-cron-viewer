@@ -82,6 +82,8 @@ add_filter( 'network_admin_plugin_action_links_' . plugin_basename( SCHEDULELENS
 if ( is_admin() ) {
 	require_once SCHEDULELENS_PATH . 'includes/class-schedulelens-admin.php';
 	ScheduleLens_Admin::init();
+	require_once SCHEDULELENS_PATH . 'includes/class-schedulelens-review-notice.php';
+	ScheduleLens_Review_Notice::init();
 }
 
 /**
