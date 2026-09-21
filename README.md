@@ -58,6 +58,7 @@ composer require devmonowar/schedulelens-cron-viewer
 
 ## Links
 
+- Plugin page: https://devmonowar.github.io/schedulelens-cron-viewer/
 - WordPress.org: https://wordpress.org/plugins/schedulelens-cron-viewer/
 - Support forum: https://wordpress.org/support/plugin/schedulelens-cron-viewer/
 - Source: https://github.com/devmonowar/schedulelens-cron-viewer
