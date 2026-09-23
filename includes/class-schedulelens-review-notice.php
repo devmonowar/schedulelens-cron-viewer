@@ -75,13 +75,21 @@ final class ScheduleLens_Review_Notice {
 	/**
 	 * Record when the plugin was first seen in the admin, so existing installs
 	 * also wait a full period after updating to a version with this notice.
+	 * Own screen only: the option is autoload=no, don't query it on every
+	 * admin page load. Uses $_GET, not get_current_screen(): at admin_init
+	 * the screen isn't set yet (admin.php fires admin_init before
+	 * set_current_screen()), so a screen check would never pass.
 	 *
 	 * @return void
 	 */
 	public static function start_clock() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only page check, no state change.
+		if ( ! isset( $_GET['page'] ) || 'schedulelens-cron-viewer' !== $_GET['page'] ) {
+			return;
+		}
 		$state = get_option( self::OPTION );
 		if ( ! is_array( $state ) || empty( $state['since'] ) ) {
-			update_option( self::OPTION, array( 'since' => time() ), 'no' );
+			update_option( self::OPTION, array( 'since' => time() ), false );
 		}
 	}
 
@@ -109,7 +117,7 @@ final class ScheduleLens_Review_Notice {
 		} else {
 			$state['snooze_until'] = time() + self::SNOOZE_DAYS * DAY_IN_SECONDS;
 		}
-		update_option( self::OPTION, $state, 'no' );
+		update_option( self::OPTION, $state, false );
 
 		wp_safe_redirect( remove_query_arg( array( 'sl_review', '_wpnonce' ) ) );
 		exit;
@@ -181,11 +189,11 @@ final class ScheduleLens_Review_Notice {
 		// Only ask people who actually use the plugin: a Run-now in the log,
 		// a custom event added, or a job paused. All three are autoload=no
 		// options, so this costs three cached get_option() calls.
-		$log    = get_option( 'schedulelens_log', array() );
-		$custom = (int) get_option( 'schedulelens_custom_count', 0 );
-		$paused = get_option( 'schedulelens_paused', array() );
+		$log     = get_option( 'schedulelens_log', array() );
+		$tracked = get_option( 'schedulelens_custom_jobs', array() );
+		$paused  = get_option( 'schedulelens_paused', array() );
 
-		return ! empty( $log ) || $custom > 0 || ! empty( $paused );
+		return ! empty( $log ) || ! empty( $tracked ) || ! empty( $paused );
 	}
 
 	/**

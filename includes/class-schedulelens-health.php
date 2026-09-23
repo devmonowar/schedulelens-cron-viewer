@@ -1,6 +1,9 @@
 <?php
 /**
- * Health checks (read-only).
+ * Health checks.
+ * Note: the reachability probe is a GET to your own wp-cron.php, which may
+ * execute due jobs as a side effect — so opening the Health tab can run
+ * overdue jobs. Everything else here only reads.
  *
  * @package ScheduleLens
  */
@@ -65,7 +68,7 @@ class ScheduleLens_Health {
 		$now     = time();
 		foreach ( $events as $e ) {
 			if ( $e['timestamp'] < $now - 60 ) {
-				$late++;
+				++$late;
 				$diff = (int) ( ( $now - $e['timestamp'] ) / 60 );
 				if ( $diff > $maxlate ) {
 					$maxlate = $diff;

@@ -122,7 +122,7 @@ class ScheduleLens_Admin {
 		// Dismiss banner.
 		if ( isset( $_GET['dismiss'] ) ) {
 			check_admin_referer( 'schedulelens_action' );
-			update_option( 'schedulelens_dismissed', 1, 'no' );
+			update_option( 'schedulelens_dismissed', 1, false );
 			delete_transient( 'schedulelens_welcome' );
 			schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=events' ) );
 		}
@@ -135,7 +135,7 @@ class ScheduleLens_Admin {
 		$action  = $is_post ? sanitize_key( wp_unslash( $_POST['schedulelens_action'] ) ) : sanitize_key( wp_unslash( $_GET['schedulelens_action'] ) );
 		check_admin_referer( 'schedulelens_action' );
 
-		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'events';
+		$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'events';
 		$back = admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=' . $tab );
 
 		switch ( $action ) {
@@ -144,24 +144,27 @@ class ScheduleLens_Admin {
 				$hook = isset( $_GET['hook'] ) ? schedulelens_sanitize_hook( wp_unslash( $_GET['hook'] ) ) : '';
 				$ts   = isset( $_GET['ts'] ) ? absint( $_GET['ts'] ) : 0;
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload, unslashed here and recursively sanitized in decode_args().
-				$args = self::decode_args( isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '' );
-				if ( '' !== $hook ) {
-					ScheduleLens_Events::run_now( $hook, $args );
-					ScheduleLens_Health::clear_cache();
+				$raw_args = isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '';
+				$args     = self::decode_args( $raw_args );
+				$res      = ( '' !== $hook ) ? ScheduleLens_Events::run_now( $hook, $args, self::decode_args_raw( $raw_args ) ) : array( 'ok' => false );
+				ScheduleLens_Health::clear_cache();
+				if ( ! empty( $res['ok'] ) ) {
 					self::notice( __( 'Event triggered. Check the Log tab.', 'schedulelens-cron-viewer' ) );
+					schedulelens_safe_redirect( $back . '&ran=1' );
+				} else {
+					schedulelens_safe_redirect( $back . '&run_failed=1' );
 				}
-				schedulelens_safe_redirect( $back . '&ran=1' );
 				break;
 
 			case 'pause':
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- unslashed here, sanitized by schedulelens_sanitize_hook().
 				$hook = isset( $_GET['hook'] ) ? schedulelens_sanitize_hook( wp_unslash( $_GET['hook'] ) ) : '';
 				$ts   = isset( $_GET['ts'] ) ? absint( $_GET['ts'] ) : 0;
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload, unslashed here and recursively sanitized in decode_args().
-				$args = self::decode_args( isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '' );
-				ScheduleLens_Events::pause( $hook, $args, $ts );
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload, unslashed here; raw copy used for exact stored-event matching.
+				$args = self::decode_args_raw( isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '' );
+				$ok   = ScheduleLens_Events::pause( $hook, $args, $ts );
 				ScheduleLens_Health::clear_cache();
-				schedulelens_safe_redirect( $back . '&paused=1' );
+				schedulelens_safe_redirect( $back . ( $ok ? '&paused=1' : '&pause_failed=1' ) );
 				break;
 
 			case 'resume':
@@ -179,11 +182,17 @@ class ScheduleLens_Admin {
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- unslashed here, sanitized by schedulelens_sanitize_hook().
 				$hook = isset( $_GET['hook'] ) ? schedulelens_sanitize_hook( wp_unslash( $_GET['hook'] ) ) : '';
 				$ts   = isset( $_GET['ts'] ) ? absint( $_GET['ts'] ) : 0;
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload, unslashed here and recursively sanitized in decode_args().
-				$args = self::decode_args( isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '' );
-				ScheduleLens_Events::delete( $hook, $args, $ts );
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload, unslashed here; raw copy used for exact stored-event matching.
+				$args = self::decode_args_raw( isset( $_GET['args'] ) ? wp_unslash( $_GET['args'] ) : '' );
+				$res  = ScheduleLens_Events::delete( $hook, $args, $ts );
 				ScheduleLens_Health::clear_cache();
-				schedulelens_safe_redirect( $back . '&deleted=1' );
+				if ( true === $res ) {
+					schedulelens_safe_redirect( $back . '&deleted=1' );
+				} elseif ( 'core_blocked' === $res ) {
+					schedulelens_safe_redirect( $back . '&delete_blocked=1' );
+				} else {
+					schedulelens_safe_redirect( $back . '&delete_failed=1' );
+				}
 				break;
 
 			case 'add_event':
@@ -200,23 +209,35 @@ class ScheduleLens_Admin {
 						$args  = is_array( $clean ) ? $clean : array();
 					}
 				}
-				ScheduleLens_Events::add( $hook, $schedule, $args );
+				$res = ScheduleLens_Events::add( $hook, $schedule, $args );
 				ScheduleLens_Health::clear_cache();
-				schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=events&added=1' ) );
+				if ( true === $res ) {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=events&added=1' ) );
+				} else {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=events&add_error=' . $res ) );
+				}
 				break;
 
 			case 'add_schedule':
 				$slug     = isset( $_POST['sched_slug'] ) ? sanitize_key( wp_unslash( $_POST['sched_slug'] ) ) : '';
 				$interval = isset( $_POST['sched_interval'] ) ? absint( $_POST['sched_interval'] ) : 0;
 				$display  = isset( $_POST['sched_display'] ) ? sanitize_text_field( wp_unslash( $_POST['sched_display'] ) ) : '';
-				ScheduleLens_Schedules::create( $slug, $interval, $display );
-				schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&added=1' ) );
+				$res      = ScheduleLens_Schedules::create( $slug, $interval, $display );
+				if ( true === $res ) {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&added=1' ) );
+				} else {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&sched_error=' . $res ) );
+				}
 				break;
 
 			case 'delete_schedule':
 				$slug = isset( $_GET['slug'] ) ? sanitize_key( wp_unslash( $_GET['slug'] ) ) : '';
-				ScheduleLens_Schedules::delete( $slug );
-				schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&deleted=1' ) );
+				$res  = ScheduleLens_Schedules::delete( $slug );
+				if ( true === $res ) {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&deleted=1' ) );
+				} else {
+					schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=schedules&sched_del_error=' . $res ) );
+				}
 				break;
 
 			case 'clear_log':
@@ -239,7 +260,7 @@ class ScheduleLens_Admin {
 						'show_core'            => $show,
 						'cleanup_on_uninstall' => $cleanup,
 					),
-					'no'
+					false
 				);
 				schedulelens_safe_redirect( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=settings&saved=1' ) );
 				break;
@@ -248,6 +269,8 @@ class ScheduleLens_Admin {
 
 	/**
 	 * Decode args from URL (JSON, URL-encoded) with recursive sanitization.
+	 * Sanitized copy is for firing callbacks; use decode_args_raw() when
+	 * matching stored events (sanitize can alter values and break matching).
 	 *
 	 * @param string $raw Raw.
 	 * @return array
@@ -262,6 +285,22 @@ class ScheduleLens_Admin {
 		}
 		$clean = schedulelens_sanitize_args( array_slice( $data, 0, 10 ) );
 		return is_array( $clean ) ? $clean : array();
+	}
+
+	/**
+	 * Decode args from URL without sanitizing, for exact stored-event
+	 * matching (pause/delete/run-exists). Caller already passed
+	 * manage_options + nonce; values are only compared, never output.
+	 *
+	 * @param string $raw Raw.
+	 * @return array
+	 */
+	private static function decode_args_raw( $raw ) {
+		if ( '' === $raw ) {
+			return array();
+		}
+		$data = json_decode( $raw, true );
+		return is_array( $data ) ? $data : array();
 	}
 
 	/**
@@ -338,6 +377,48 @@ class ScheduleLens_Admin {
 				echo '<div class="notice ' . esc_attr( $cls ) . ' is-dismissible"><p>' . esc_html( $msg ) . '</p></div>';
 				break;
 			}
+		}
+		$errors = array(
+			'run_failed'     => __( 'Could not run. The job may no longer be scheduled, or it failed — see the Log tab.', 'schedulelens-cron-viewer' ),
+			'pause_failed'   => __( 'Could not pause. It may have already run, or the pause list (50) is full.', 'schedulelens-cron-viewer' ),
+			'delete_blocked' => __( 'Core jobs cannot be deleted.', 'schedulelens-cron-viewer' ),
+			'delete_failed'  => __( 'Could not delete. It may already be gone.', 'schedulelens-cron-viewer' ),
+		);
+		foreach ( $errors as $flag => $msg ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only error flag, no state change.
+			if ( isset( $_GET[ $flag ] ) ) {
+				echo '<div class="notice notice-error is-dismissible"><p>' . esc_html( $msg ) . '</p></div>';
+				break;
+			}
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only error code, allowlisted below.
+		$add_error = isset( $_GET['add_error'] ) ? sanitize_key( wp_unslash( $_GET['add_error'] ) ) : '';
+		$add_msgs  = array(
+			'bad_hook'       => __( 'Could not add: invalid hook name.', 'schedulelens-cron-viewer' ),
+			'limit'          => __( 'Could not add: custom job limit (50) reached.', 'schedulelens-cron-viewer' ),
+			'bad_schedule'   => __( 'Could not add: unknown schedule.', 'schedulelens-cron-viewer' ),
+			'schedule_failed' => __( 'Could not add: scheduling failed.', 'schedulelens-cron-viewer' ),
+		);
+		if ( isset( $add_msgs[ $add_error ] ) ) {
+			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html( $add_msgs[ $add_error ] ) . '</p></div>';
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only error code, allowlisted below.
+		$sched_error = isset( $_GET['sched_error'] ) ? sanitize_key( wp_unslash( $_GET['sched_error'] ) ) : '';
+		$sched_msgs  = array(
+			'bad_input' => __( 'Could not add schedule: slug required, interval 60s–30d.', 'schedulelens-cron-viewer' ),
+			'exists'    => __( 'Could not add schedule: that slug already exists.', 'schedulelens-cron-viewer' ),
+		);
+		if ( isset( $sched_msgs[ $sched_error ] ) ) {
+			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html( $sched_msgs[ $sched_error ] ) . '</p></div>';
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only error code, allowlisted below.
+		$sched_del_error = isset( $_GET['sched_del_error'] ) ? sanitize_key( wp_unslash( $_GET['sched_del_error'] ) ) : '';
+		$sched_del_msgs  = array(
+			'not_custom' => __( 'Could not delete schedule: not a custom schedule.', 'schedulelens-cron-viewer' ),
+			'in_use'     => __( 'Could not delete schedule: events still use it.', 'schedulelens-cron-viewer' ),
+		);
+		if ( isset( $sched_del_msgs[ $sched_del_error ] ) ) {
+			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html( $sched_del_msgs[ $sched_del_error ] ) . '</p></div>';
 		}
 		if ( file_exists( $file ) ) {
 			include $file;

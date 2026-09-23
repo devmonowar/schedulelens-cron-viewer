@@ -39,14 +39,14 @@ class ScheduleLens_Logger {
 			$log,
 			array(
 				'time'  => time(),
-				'hook'  => sanitize_key( $hook ),
+				'hook'  => schedulelens_sanitize_hook( $hook ),
 				'ok'    => $ok ? 1 : 0,
 				'ms'    => absint( $ms ),
 				'error' => sanitize_text_field( $error ),
 			)
 		);
 		$log = array_slice( $log, 0, self::MAX_ROWS );
-		update_option( 'schedulelens_log', $log, 'no' );
+		update_option( 'schedulelens_log', $log, false );
 	}
 
 	/**
@@ -65,15 +65,21 @@ class ScheduleLens_Logger {
 	 * @return void
 	 */
 	public static function clear() {
-		update_option( 'schedulelens_log', array(), 'no' );
+		update_option( 'schedulelens_log', array(), false );
 	}
 
 	/**
 	 * Prune by days (called max once daily via transient).
+	 * Own screen only: the lock transient is autoload=no, don't query
+	 * it on every admin page load.
 	 *
 	 * @return void
 	 */
 	public static function maybe_prune() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only page check, no state change.
+		if ( ! isset( $_GET['page'] ) || 'schedulelens-cron-viewer' !== $_GET['page'] ) {
+			return;
+		}
 		if ( get_transient( 'schedulelens_prune_lock' ) ) {
 			return;
 		}
@@ -95,7 +101,7 @@ class ScheduleLens_Logger {
 			}
 		}
 		if ( count( $kept ) !== count( $log ) ) {
-			update_option( 'schedulelens_log', array_slice( $kept, 0, self::MAX_ROWS ), 'no' );
+			update_option( 'schedulelens_log', array_slice( $kept, 0, self::MAX_ROWS ), false );
 		}
 	}
 }

@@ -35,6 +35,7 @@ if ( 'yellow' === $schedulelens_health['status'] ) {
 			<li><?php /* translators: %d: late count */ printf( esc_html__( 'Late events: %d', 'schedulelens-cron-viewer' ), absint( $schedulelens_health['late'] ) ); ?></li>
 			<li><?php /* translators: %d: total */ printf( esc_html__( 'Total events: %d', 'schedulelens-cron-viewer' ), absint( $schedulelens_health['total'] ) ); ?></li>
 		</ul>
+		<p class="description"><?php esc_html_e( 'Note: the reachability check above loads your own wp-cron.php, which may run jobs that are due.', 'schedulelens-cron-viewer' ); ?></p>
 	</div>
 	<div class="schedulelens-card">
 		<h2><?php esc_html_e( 'What to do', 'schedulelens-cron-viewer' ); ?></h2>

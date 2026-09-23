@@ -56,8 +56,10 @@ function schedulelens_uninstall_blog() {
 	delete_option( 'schedulelens_paused' );
 	delete_option( 'schedulelens_log' );
 	delete_option( 'schedulelens_schedules' );
+	delete_option( 'schedulelens_custom_jobs' );
 	delete_option( 'schedulelens_custom_count' );
 	delete_option( 'schedulelens_dismissed' );
+	delete_option( 'schedulelens_review' );
 }
 
 if ( is_multisite() ) {

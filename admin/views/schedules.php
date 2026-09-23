@@ -24,7 +24,7 @@ if ( is_array( $schedulelens_cron ) ) {
 			}
 			foreach ( $schedulelens_instances as $schedulelens_data ) {
 				if ( isset( $schedulelens_data['schedule'] ) && '' !== $schedulelens_data['schedule'] ) {
-					$schedulelens_sched = $schedulelens_data['schedule'];
+					$schedulelens_sched                        = $schedulelens_data['schedule'];
 					$schedulelens_usage[ $schedulelens_sched ] = isset( $schedulelens_usage[ $schedulelens_sched ] ) ? $schedulelens_usage[ $schedulelens_sched ] + 1 : 1;
 				}
 			}

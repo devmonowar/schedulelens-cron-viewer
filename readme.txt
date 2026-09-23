@@ -4,7 +4,7 @@ Tags: cron, wp-cron, cron job manager, missed schedule, scheduled posts
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,9 +82,20 @@ ScheduleLens makes one kind of outbound request: a loopback GET to your own site
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed: every action now reports its real result — core delete blocked with a warning, exact-timestamp delete, failed pause/run reported instead of false "success".
+* Fixed: Run now only fires hooks that are actually scheduled; log keeps full hook names (case, dots, slashes).
+* Added: review notice (15-day) + footer rating link, .pot translation template.
+* Tooling: PHPCS WordPress-Extra clean, PHPStan level 5, CI on push/PR.
+
 = 1.0.0 =
 * Initial release: events list + search/filter, run/pause/resume/delete, add custom job, custom intervals, health lite, 100-row log, settings.
 
 == Privacy ==
 
 Stores paused jobs list, last 100 log rows, custom intervals, and 3 settings in wp_options (autoload=no). Auto-prunes log after 3/7/14 days (default 7). No personal data stored. No external requests except a loopback GET to your own site for health check. All data deleted on uninstall if enabled in Settings.
+
+== Upgrade Notice ==
+
+= 1.0.1 =
+Action feedback fixed (no more false "success"), exact delete, safer Run now. No settings change needed.

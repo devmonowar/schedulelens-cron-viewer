@@ -47,7 +47,7 @@ function schedulelens_is_core_hook( $hook ) {
  * @return string Source label.
  */
 function schedulelens_detect_source( $hook ) {
-	static $schedulelens_cache = array();
+	static $schedulelens_cache   = array();
 	static $schedulelens_plugins = null;
 	if ( isset( $schedulelens_cache[ $hook ] ) ) {
 		return $schedulelens_cache[ $hook ];
@@ -164,9 +164,9 @@ function schedulelens_sanitize_args( $value, $depth = 0 ) {
 			if ( $i >= 10 ) {
 				break;
 			}
-			$clean_k = is_string( $k ) ? sanitize_text_field( $k ) : $k;
+			$clean_k         = is_string( $k ) ? sanitize_text_field( $k ) : $k;
 			$out[ $clean_k ] = schedulelens_sanitize_args( $v, $depth + 1 );
-			$i++;
+			++$i;
 		}
 		return $out;
 	}
@@ -180,7 +180,8 @@ function schedulelens_sanitize_args( $value, $depth = 0 ) {
 }
 
 /**
- * Safe redirect with fallback link (avoids headers-sent blank pages).
+ * Safe redirect. Admin-side only: headers are always still sendable here,
+ * so wp_safe_redirect + exit is enough (no fallback link needed).
  *
  * @param string $url URL.
  * @return void

@@ -1,10 +1,5 @@
 name: CI
 
-# Lightweight gates for ScheduleLens (no test suite yet).
-# general-slider runs PHPCS + PHPStan + PHPUnit; this plugin keeps
-# php -l across 7.4-8.3 so the deploy tag never ships a syntax error.
-# Add PHPCS/PHPUnit later when configs land.
-
 on:
   push:
     branches: [ main ]
@@ -24,4 +19,34 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
       - name: Lint PHP files
-        run: find . -path ./assets/vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 -P4 php -l
+        run: find . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 -P4 php -l
+
+  phpstan:
+    name: Static analysis (PHPStan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      - name: Run PHPStan
+        run: composer stan
+
+  phpcs:
+    name: Coding standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: composer
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      - name: Run PHPCS
+        run: composer lint

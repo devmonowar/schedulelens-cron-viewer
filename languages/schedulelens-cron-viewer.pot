@@ -1,0 +1,487 @@
+# Copyright (C) 2026 Monowar Hossain
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: ScheduleLens - Cron Viewer & Manager\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: schedulelens-cron-viewer\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin/views/events.php:65
+msgid "%1$d events • %2$d overdue"
+msgstr ""
+
+#: admin/views/events.php:134
+msgid "%d args"
+msgstr ""
+
+#: includes/helpers.php:145
+msgid "%d day"
+msgstr ""
+
+#: admin/views/events.php:71
+msgid "%d events • All on time"
+msgstr ""
+
+#: includes/helpers.php:142
+msgid "%d hour"
+msgstr ""
+
+#: includes/helpers.php:138
+msgid "%d min"
+msgstr ""
+
+#: includes/helpers.php:134
+msgid "%d sec"
+msgstr ""
+
+#: admin/views/events.php:151
+msgid "%s ago"
+msgstr ""
+
+#: admin/views/settings.php:27
+msgid "14 days"
+msgstr ""
+
+#: admin/views/settings.php:25
+msgid "3 days"
+msgstr ""
+
+#: admin/views/settings.php:26
+msgid "7 days"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:140
+msgid "A quick 5-star review helps other people find the plugin and keeps development going. Thank you!"
+msgstr ""
+
+#: admin/views/events.php:116 admin/views/events.php:223 admin/views/schedules.php:41
+msgid "Actions"
+msgstr ""
+
+#: admin/views/events.php:184
+msgid "Add custom job"
+msgstr ""
+
+#: admin/views/schedules.php:69 admin/views/schedules.php:87
+msgid "Add interval"
+msgstr ""
+
+#: admin/views/events.php:210
+msgid "Add job"
+msgstr ""
+
+#: admin/views/events.php:90
+msgid "All"
+msgstr ""
+
+#: admin/views/events.php:206
+msgid "Args (JSON, optional)"
+msgstr ""
+
+#: admin/views/health.php:44
+msgid "Ask your host about loopback requests."
+msgstr ""
+
+#: admin/views/events.php:82
+msgid "Check health"
+msgstr ""
+
+#: admin/views/health.php:43
+msgid "Check if a caching plugin blocks cron."
+msgstr ""
+
+#: admin/views/health.php:31
+msgid "Checks"
+msgstr ""
+
+#: admin/views/settings.php:36
+msgid "Cleanup"
+msgstr ""
+
+#: admin/views/log.php:18
+msgid "Clear log"
+msgstr ""
+
+#: admin/views/events.php:167 admin/views/events.php:90
+msgid "Core"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:384
+msgid "Core jobs cannot be deleted."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:408
+msgid "Could not add schedule: slug required, interval 60s–30d."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:409
+msgid "Could not add schedule: that slug already exists."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:398
+msgid "Could not add: custom job limit (50) reached."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:397
+msgid "Could not add: invalid hook name."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:400
+msgid "Could not add: scheduling failed."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:399
+msgid "Could not add: unknown schedule."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:418
+msgid "Could not delete schedule: events still use it."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:417
+msgid "Could not delete schedule: not a custom schedule."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:385
+msgid "Could not delete. It may already be gone."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:383
+msgid "Could not pause. It may have already run, or the pause list (50) is full."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:367
+msgid "Could not resume. The schedule may no longer exist."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:382
+msgid "Could not run. The job may no longer be scheduled, or it failed — see the Log tab."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:343 includes/class-schedulelens-admin.php:44 includes/class-schedulelens-admin.php:45
+msgid "Cron Manager"
+msgstr ""
+
+#: admin/views/events.php:90
+msgid "Custom"
+msgstr ""
+
+#: admin/views/events.php:174 admin/views/schedules.php:57
+msgid "Delete"
+msgstr ""
+
+#: admin/views/settings.php:37
+msgid "Delete all data on uninstall"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:80
+msgid "Delete this custom job? This cannot be undone."
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:142
+msgid "Did you get a chance to leave that review?"
+msgstr ""
+
+#: admin/views/log.php:27
+msgid "Duration"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:139
+msgid "Enjoying ScheduleLens?"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:69
+msgid "Enjoying ScheduleLens? Leave us a %1$s&#9733;&#9733;&#9733;&#9733;&#9733; review%2$s — it keeps development going."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:152 includes/class-schedulelens-admin.php:364
+msgid "Event triggered. Check the Log tab."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:348
+msgid "Events"
+msgstr ""
+
+#: includes/class-schedulelens-schedules.php:49
+msgid "Every %s"
+msgstr ""
+
+#: admin/views/events.php:96
+msgid "Filter"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:105
+msgid "Got it"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:352
+msgid "Health"
+msgstr ""
+
+#: admin/views/events.php:191
+msgid "Hook name"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:143
+msgid "If you did — thank you! Confirm below and we will never ask again."
+msgstr ""
+
+#: admin/views/events.php:154
+msgid "in %s"
+msgstr ""
+
+#: admin/views/schedules.php:59
+msgid "In use"
+msgstr ""
+
+#: admin/views/schedules.php:39
+msgid "Interval"
+msgstr ""
+
+#: admin/views/events.php:111 admin/views/events.php:221 admin/views/log.php:26
+msgid "Job"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:369
+msgid "Job added."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:368
+msgid "Job deleted."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:365
+msgid "Job paused. See Paused jobs below to resume."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:366
+msgid "Job resumed."
+msgstr ""
+
+#: admin/views/settings.php:22
+msgid "Keep log"
+msgstr ""
+
+#: admin/views/log.php:19
+msgid "Keep: %d days"
+msgstr ""
+
+#: admin/views/schedules.php:83
+msgid "Label"
+msgstr ""
+
+#: admin/views/health.php:35
+msgid "Late events: %d"
+msgstr ""
+
+#: admin/views/events.php:192
+msgid "Letters, numbers, _ - . / : only"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:354
+msgid "Log"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:371
+msgid "Log cleared."
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:155
+msgid "Maybe later"
+msgstr ""
+
+#: admin/views/schedules.php:38
+msgid "Name"
+msgstr ""
+
+#: admin/views/events.php:113
+msgid "Next run"
+msgstr ""
+
+#: admin/views/events.php:78
+msgid "Next: %1$s %2$s"
+msgstr ""
+
+#: admin/views/health.php:33 admin/views/health.php:34
+msgid "No"
+msgstr ""
+
+#: admin/views/events.php:121
+msgid "No events found. Try clear search."
+msgstr ""
+
+#: admin/views/log.php:33
+msgid "No runs yet. Use “Run now” from Events."
+msgstr ""
+
+#: includes/class-schedulelens-health.php:81
+msgid "Not running"
+msgstr ""
+
+#: admin/views/health.php:38
+msgid "Note: the reachability check above loads your own wp-cron.php, which may run jobs that are due."
+msgstr ""
+
+#: admin/views/events.php:164
+msgid "OK"
+msgstr ""
+
+#: includes/class-schedulelens-health.php:88
+msgid "On time"
+msgstr ""
+
+#: admin/views/events.php:140 admin/views/events.php:198 admin/views/events.php:233
+msgid "Once"
+msgstr ""
+
+#: admin/views/events.php:162 admin/views/events.php:90
+msgid "Overdue"
+msgstr ""
+
+#: admin/views/events.php:172
+msgid "Pause"
+msgstr ""
+
+#: admin/views/health.php:45
+msgid "Pause broken jobs from the Events tab."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:79
+msgid "Pause this job? It will not run until resumed."
+msgstr ""
+
+#: admin/views/events.php:232
+msgid "Paused"
+msgstr ""
+
+#: admin/views/events.php:217
+msgid "Paused jobs"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:158
+msgid "Rate it ★★★★★"
+msgstr ""
+
+#: admin/views/health.php:34
+msgid "Reachable:"
+msgstr ""
+
+#: admin/views/log.php:20
+msgid "Refresh"
+msgstr ""
+
+#: admin/views/events.php:112 admin/views/events.php:195 admin/views/events.php:222
+msgid "Repeat"
+msgstr ""
+
+#: admin/views/events.php:234
+msgid "Resume"
+msgstr ""
+
+#: admin/views/events.php:171
+msgid "Run now"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:81
+msgid "Run this job now?"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:103
+msgid "ScheduleLens is ready. See your scheduled jobs below, pause broken ones, and check the Health tab."
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:350
+msgid "Schedules"
+msgstr ""
+
+#: admin/views/events.php:95
+msgid "Search hook…"
+msgstr ""
+
+#: admin/views/schedules.php:79
+msgid "Seconds (60-2592000)"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:356 schedulelens-cron-viewer.php:81
+msgid "Settings"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:370
+msgid "Settings saved."
+msgstr ""
+
+#: admin/views/settings.php:32
+msgid "Show core jobs"
+msgstr ""
+
+#: admin/views/settings.php:33
+msgid "Show WordPress core jobs"
+msgstr ""
+
+#: admin/views/events.php:103
+msgid "Showing %1$d of %2$d events (soonest first). Use search/filter to narrow down."
+msgstr ""
+
+#: includes/class-schedulelens-health.php:85
+msgid "Slight delay (%d min)"
+msgstr ""
+
+#: admin/views/schedules.php:75
+msgid "Slug"
+msgstr ""
+
+#: admin/views/health.php:27
+msgid "Some jobs are late. See steps below."
+msgstr ""
+
+#: admin/views/events.php:114
+msgid "Source"
+msgstr ""
+
+#: admin/views/events.php:115 admin/views/health.php:22 admin/views/log.php:28
+msgid "Status"
+msgstr ""
+
+#: admin/views/log.php:25
+msgid "Time"
+msgstr ""
+
+#: admin/views/health.php:36
+msgid "Total events: %d"
+msgstr ""
+
+#: admin/views/events.php:185
+msgid "Trigger an existing hook on a schedule. No PHP code allowed (safe)."
+msgstr ""
+
+#: admin/views/schedules.php:40
+msgid "Used by"
+msgstr ""
+
+#: admin/views/health.php:41
+msgid "What to do"
+msgstr ""
+
+#: admin/views/health.php:33
+msgid "WP-Cron enabled:"
+msgstr ""
+
+#: admin/views/health.php:33 admin/views/health.php:34
+msgid "Yes"
+msgstr ""
+
+#: includes/class-schedulelens-review-notice.php:151
+msgid "Yes, I left a review"
+msgstr ""
+
+#: includes/class-schedulelens-admin.php:334
+msgid "You do not have permission."
+msgstr ""
+
+#: admin/views/health.php:25
+msgid "Your scheduled posts will publish on time."
+msgstr ""
+

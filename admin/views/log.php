@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$schedulelens_log      = ScheduleLens_Logger::get();
-$schedulelens_settings = get_option( 'schedulelens_settings', array() );
-$schedulelens_keep     = isset( $schedulelens_settings['keep_days'] ) ? absint( $schedulelens_settings['keep_days'] ) : 7;
+$schedulelens_log       = ScheduleLens_Logger::get();
+$schedulelens_settings  = get_option( 'schedulelens_settings', array() );
+$schedulelens_keep      = isset( $schedulelens_settings['keep_days'] ) ? absint( $schedulelens_settings['keep_days'] ) : 7;
 $schedulelens_clear_url = wp_nonce_url( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=log&schedulelens_action=clear_log' ), 'schedulelens_action' );
 ?>
 <p>

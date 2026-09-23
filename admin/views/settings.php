@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $schedulelens_settings = get_option( 'schedulelens_settings', schedulelens_get_default_settings() );
 $schedulelens_keep     = isset( $schedulelens_settings['keep_days'] ) ? absint( $schedulelens_settings['keep_days'] ) : 7;
-$schedulelens_show     = ! isset( $schedulelens_settings['show_core'] ) || (int) $schedulelens_settings['show_core'] === 1;
-$schedulelens_cleanup  = ! isset( $schedulelens_settings['cleanup_on_uninstall'] ) || (int) $schedulelens_settings['cleanup_on_uninstall'] === 1;
+$schedulelens_show     = ! isset( $schedulelens_settings['show_core'] ) || 1 === (int) $schedulelens_settings['show_core'];
+$schedulelens_cleanup  = ! isset( $schedulelens_settings['cleanup_on_uninstall'] ) || 1 === (int) $schedulelens_settings['cleanup_on_uninstall'];
 ?>
 <form method="post" action="<?php echo esc_url( admin_url( 'tools.php?page=schedulelens-cron-viewer&tab=settings' ) ); ?>">
 	<?php wp_nonce_field( 'schedulelens_action' ); ?>

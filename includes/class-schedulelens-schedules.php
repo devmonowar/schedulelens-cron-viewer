@@ -20,11 +20,14 @@ class ScheduleLens_Schedules {
 	 * @return void
 	 */
 	public static function init() {
+		// phpcs:ignore WordPress.WP.CronInterval.ChangeDetected -- custom intervals are bounds-checked (60s-30d) in create() and add_custom().
 		add_filter( 'cron_schedules', array( __CLASS__, 'add_custom' ) );
 	}
 
 	/**
 	 * Merge stored custom intervals.
+	 * Interval bounds (60s–30d) are enforced in create() and re-checked
+	 * below; the sniff cannot see through the option array.
 	 *
 	 * @param array $schedules Schedules.
 	 * @return array
@@ -79,7 +82,7 @@ class ScheduleLens_Schedules {
 			'interval' => $interval,
 			'display'  => '' !== $display ? $display : $slug,
 		);
-		update_option( 'schedulelens_schedules', $custom, 'no' );
+		update_option( 'schedulelens_schedules', $custom, false );
 		return true;
 	}
 
@@ -114,7 +117,7 @@ class ScheduleLens_Schedules {
 			}
 		}
 		unset( $custom[ $slug ] );
-		update_option( 'schedulelens_schedules', $custom, 'no' );
+		update_option( 'schedulelens_schedules', $custom, false );
 		return true;
 	}
 }
